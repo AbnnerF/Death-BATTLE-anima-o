@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEATH BATTLE — Scale</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#090b10;--panel:#121620;--panel2:#191f2b;--border:#2b3342;--text:#f2f4f8;--muted:#a1aabd;--red:#d83e4c;--blue:#6688ff}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+header{text-align:center;padding:36px 18px 28px;background:#0d1017;border-bottom:1px solid var(--border)}
+header h1{max-width:850px;margin:0 auto 14px;font-size:clamp(24px,4vw,37px);line-height:1.2}
+header p{max-width:700px;margin:auto;color:var(--muted);font-size:14px;line-height:1.7}
+main,#details{max-width:1050px;margin:auto;padding:25px 18px 50px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.count{font-size:15px;font-weight:bold}.count span{font-weight:normal;color:var(--muted)}
+input{width:245px;max-width:55%;padding:12px;background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:7px;outline:none}
+input:focus{border-color:var(--red)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:9px;overflow:hidden;cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:var(--red)}
+.card img{width:100%;height:240px;object-fit:cover;background:#171b25;display:block}
+.card-body{padding:15px}.card h2{font-size:19px;margin:0 0 8px}.card p{font-size:13px;line-height:1.5;color:var(--muted);margin:0 0 13px}
+.tier-tag{font-size:12px;display:inline-block;padding:6px 9px;border-radius:4px;background:#27202a;color:#e9b2ff}
+#details{display:none}.back{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:6px;cursor:pointer;margin-bottom:22px}
+.back:hover{border-color:var(--red)}
+.profile{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:24px;align-items:start}
+.portrait{width:100%;max-height:450px;min-height:240px;object-fit:cover;background:var(--panel);border:1px solid var(--border);border-radius:9px}
+.profile h1{font-size:clamp(28px,5vw,40px);margin:0 0 8px}.subtitle{color:var(--muted);line-height:1.6}
+.section{margin-top:21px;padding:20px;background:var(--panel);border:1px solid var(--border);border-radius:8px}
+.section h2{font-size:19px;margin:0 0 14px;padding-bottom:11px;border-bottom:1px solid var(--border)}
+.section p,.section li{font-size:14px;line-height:1.75;color:#c8cfdd}.section ul{padding-left:21px}
+.stat{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid #252c39;font-size:14px;line-height:1.5}.stat:last-child{border:0}.stat strong{color:var(--muted)}
+.route{margin:15px 0;padding:15px;background:#171c27;border-left:3px solid var(--blue);border-radius:4px}.route h3{font-size:16px;margin:0 0 9px}.route p{margin:7px 0}.route .conclusion{color:#fff;font-weight:bold}
+.tier-box{border-color:#70313c;background:#211319}.tier-box h2{color:#ff9ca7}.tier-name{font-size:25px;font-weight:bold;margin:8px 0 12px}
+.note{color:#aab3c4!important;font-size:12px!important}
+.sources a{display:block;color:#aabaff;text-decoration:none;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.sources a:last-child{border-bottom:0}.sources a:hover{color:white}
+.empty{grid-column:1/-1;text-align:center;padding:40px 15px;border:1px dashed var(--border);color:var(--muted);border-radius:8px}
+footer{text-align:center;padding:23px;color:#788297;border-top:1px solid var(--border);font-size:12px}
+@media(max-width:650px){.profile{grid-template-columns:1fr}.portrait{max-height:380px}.toolbar{align-items:center}.stat{grid-template-columns:115px 1fr}}
+</style>
+</head>
+<body>
+<header id="heading">
+<h1>Scale de todos os personagens que aparecerão no DEATH BATTLE do John (Abnner)</h1>
+<p>Apresentações, feitos, vias de escala, habilidades e tiers dos personagens que participarão das animações DEATH BATTLE.</p>
+</header>
+<main id="home">
+<div class="toolbar"><div class="count">Personagens: <span>(total: <span id="total">6</span>)</span></div><input id="search" type="search" placeholder="Pesquisar..." aria-label="Pesquisar personagens"></div>
+<div class="cards" id="cards"></div>
+</main>
+<section id="details"><button class="back" id="back">Voltar para personagens</button><div id="content"></div></section>
+<footer>DEATH BATTLE — John (Abnner)</footer>
+<script>
+const characters = [
+{
+ id:"tbo",name:"The Boiled One",subtitle:"PHEN-228 · The Boiled One Phenomenon",image:"phen228.jpg",
+ introduction:"The Boiled One, também conhecido como PHEN-228, é uma entidade paranormal criada por Doctor Nowhere. É conhecido por uma transmissão anômala capaz de provocar terror, paralisia e efeitos psicológicos. Nesta DEATH BATTLE, ele recebe uma escala personalizada baseada nas regras e declarações do criador.",
+ stats:[["Força","Construção alta"],["Velocidade","Movimentação física lenta; teletransporte considerado na escala da animação"],["Durabilidade","Construção pequena / Parede+"],["Alcance","Corpo a corpo; ampliado por seus poderes"],["Tier declarado","Ilha grande"]],
+ powers:["Manipulação de tamanho.","Possível telecinese ou manipulação psíquica de pessoas e objetos.","Paralisia do oponente.","Criação de braços ao redor do próprio corpo.","Rasgar o céu e provocar a queda do chamado sangue da vida.","Efeitos paranormais e psicológicos associados à transmissão."],
+ routes:[
+ {title:"Via 1 — Sangue da vida",feat:"Na interpretação usada para esta animação, The Boiled One rasga o céu e faz o sangue da vida cair sobre o campo de batalha.",scaling:"O feito recebe nível de Ilha grande na escala personalizada da DEATH BATTLE.",result:"Ilha grande — feito declarado para esta animação.",caution:"É uma regra autoral da animação, não um cálculo independente confirmado pelas fontes."},
+ {title:"Via 2 — Condição de morte",feat:"Se o adversário não conseguir derrotá-lo antes que o sangue da vida caia, a queda acaba atingindo o oponente.",scaling:"Funciona como uma condição de vitória por tempo e alcance, não como prova automática de que sua durabilidade física também seja de Ilha grande.",result:"Habilidade de ameaça em área e condição de morte.",caution:"O tempo exato para a queda depende das regras da batalha."}
+ ],
+ conclusion:"Ilha grande",tierNote:"Tier declarado pelo criador para esta DEATH BATTLE. Hax e habilidades podem ser decisivos mesmo quando a durabilidade física indicada é menor.",
+ sources:[["Scaling The Boiled One — Quora","https://scalersofvariety.quora.com/Scaling-The-Boiled-One"],["Phen-228 — VS Battles Wiki","https://vsbattles.fandom.com/wiki/Phen-228_(The_Boiled_One_Phenomenon)"],["Tiering System — VS Battles Wiki","https://vsbattles.fandom.com/wiki/Tiering_System"],["Vídeo original — Doctor Nowhere","https://www.youtube.com/results?search_query=Doctor+Nowhere+The+Boiled+One+Phenomenon"]]
+},
+{
+ id:"shadow",name:"Shadow the Hedgehog",subtitle:"O ouriço negro · Sonic the Hedgehog",image:"shadow.jpg",
+ introduction:"Este é Shadow the Hedgehog, um ouriço criado por meio do Projeto Shadow e conhecido como a Forma de Vida Suprema. Ele possui grande capacidade de combate, velocidade extraordinária e controla a energia do Caos. Entre suas técnicas estão Chaos Control, Chaos Spear e Chaos Blast.",
+ stats:[["Força física","Sobre-humana; escala aumenta com seus poderes"],["Velocidade","Extremamente alta; Chaos Control pode distorcer espaço-tempo"],["Durabilidade","Elevada; varia conforme forma e energia utilizada"],["Habilidades-chave","Chaos Control, Chaos Spear e Chaos Blast"],["Tier declarado","High Complex Multiversal"]],
+ powers:["Manipulação de energia do Caos.","Chaos Control: distorção de espaço-tempo, teletransporte e, em certas representações, controle temporal.","Chaos Spear: projéteis de energia.","Chaos Blast: explosão de energia em área.","Transformação Super Shadow quando utiliza as Chaos Emeralds.","Grande velocidade, habilidade de combate e experiência contra inimigos poderosos."],
+ routes:[
+ {title:"Via 1 — Solaris",feat:"Shadow, ao lado de Super Sonic e Super Silver, participa do confronto contra Solaris em Sonic the Hedgehog (2006). Solaris é apresentado como uma ameaça que afeta diferentes períodos do tempo.",scaling:"Se Shadow em forma Super recebe escala comparável à dos aliados que enfrentaram Solaris, ele pode ser escalado a uma ameaça que não se limita a uma única época temporal.",result:"Suporte para uma escala multiversal elevada na interpretação escolhida.",caution:"O feito envolve três personagens e uma forma Super. Não demonstra sozinho todas as dimensões exigidas por High Complex Multiversal."},
+ {title:"Via 2 — Chaos Force e formas amplificadas",feat:"Algumas interpretações de power scaling, sobretudo em versões dos quadrinhos Archie, atribuem níveis dimensionais muito elevados à Chaos Force e a Shadow quando ele utiliza formas amplificadas.",scaling:"Esta via depende da continuidade usada e da interpretação da hierarquia dimensional da Chaos Force.",result:"Via de interpretação dimensional mais alta para justificar o tier escolhido.",caution:"A escala de Archie não deve ser misturada automaticamente com a continuidade principal dos jogos. O tier é a declaração autoral desta animação."}
+ ],
+ conclusion:"High Complex Multiversal",tierNote:"Tier declarado para esta DEATH BATTLE. A via de Solaris sustenta uma interpretação multiversal elevada; alcançar especificamente High Complex Multiversal exige aceitar a interpretação dimensional mais alta escolhida para esta versão de Shadow.",
+ sources:[["Shadow — VS Battles Wiki, Archie","https://vsbattles.fandom.com/wiki/Shadow_the_Hedgehog_(Archie_Pre-Genesis_Wave)"],["Shadow — Character Stats and Profiles Wiki","https://character-stats-and-profiles.fandom.com/wiki/Shadow_the_Hedgehog_(Canon,_Main_Continuity)/Remus1998"],["Sonic the Hedgehog (2006) — Solaris","https://sonic.fandom.com/wiki/Solaris"]]
+},
+{
+ id:"mewtwo",name:"Mewtwo",subtitle:"Pokémon · O Pokémon geneticamente criado",image:"mewtwo.jpg",
+ introduction:"Este é Mewtwo, um Pokémon criado por meio de experiências genéticas a partir do material genético de Mew. Dotado de inteligência extraordinária e enormes poderes psíquicos, consegue mover objetos, criar barreiras, teleportar-se e enfrentar outros Pokémon lendários.",
+ stats:[["Força física","Elevada; poderes psíquicos ampliam sua capacidade de combate"],["Velocidade","Alta; varia conforme a versão"],["Durabilidade","Escala planetária na interpretação desta animação"],["Habilidades-chave","Telecinese, telepatia, barreiras, teleportação e ataques psíquicos"],["Tier declarado","Planetário+"]],
+ powers:["Telecinese: mover, suspender ou arremessar pessoas e objetos.","Telepatia e comunicação mental.","Teleportação.","Barreiras psíquicas defensivas.","Manipulação e projeção de energia psíquica.","Controle de objetos e contenção de adversários.","Mega Evolução em versões que possuem Mega Mewtwo X ou Mega Mewtwo Y."],
+ routes:[
+ {title:"Via 1 — A tempestade global",feat:"Em Pokémon: O Primeiro Filme, Mewtwo demonstra poderes psíquicos em larga escala e provoca uma tempestade que ameaça se espalhar pelo planeta.",scaling:"A dimensão global do fenômeno serve como base para a interpretação de poder planetário. É um feito de alcance e influência atmosférica, não uma demonstração direta de destruição planetária.",result:"Suporte para Planetário na interpretação escolhida.",caution:"Criar ou afetar uma tempestade global não equivale automaticamente a destruir um planeta."},
+ {title:"Via 2 — Confronto com Mew",feat:"No primeiro filme, Mewtwo enfrenta Mew, e os dois demonstram poderes capazes de afetar o ambiente e combater em escala extraordinária.",scaling:"A comparação com Mew reforça a escala elevada de Mewtwo. Para Planetário+, esta animação considera também a interpretação mais alta de seus poderes psíquicos.",result:"Planetário+ — tier declarado para esta DEATH BATTLE.",caution:"O combate contra Mew, sozinho, não prova que Mewtwo consiga destruir um planeta inteiro com um único ataque."}
+ ],
+ conclusion:"Planetário+",tierNote:"Tier declarado para esta DEATH BATTLE. As vias usam feitos do filme e interpretação dos poderes psíquicos; Planetário+ é a escala escolhida pelo criador.",
+ sources:[["Mewtwo — VS Battles Wiki","https://vsbattles.fandom.com/wiki/Mewtwo"],["Pokémon: O Primeiro Filme","https://pt.wikipedia.org/wiki/Pok%C3%A9mon:_The_First_Movie"],["Mew — VS Battles Wiki","https://vsbattles.fandom.com/wiki/Mew_(Pok%C3%A9mon)"]]
+},
+{
+ id:"baldi",name:"Baldi Baldimore",subtitle:"Baldi's Basics · O professor de matemática",image:"baldi.jpg",
+ introduction:"Este é Baldi Baldimore, o professor de matemática e principal perseguidor de Baldi's Basics. Ele se torna perigoso quando o jogador erra questões e usa sua régua para atacar. Sua capacidade de ouvir sons permite localizar o jogador durante a perseguição.",
+ stats:[["Força","Parede+"],["Velocidade","Acelera durante determinadas perseguições; valor exato não estabelecido"],["Durabilidade","Não estabelecida com precisão"],["Habilidades","Audição excepcional, perseguição e ataques com régua"],["Tier declarado","Parede+"]],
+ powers:["Audição excepcional para localizar a origem dos sons.","Aceleração durante determinadas perseguições.","Combate com régua.","Persistência na perseguição do jogador.","Capacidade de reagir a sons produzidos no ambiente escolar."],
+ routes:[
+ {title:"Via 1 — Ataques com a régua",feat:"Baldi usa sua régua para atingir o jogador durante as perseguições.",scaling:"Para esta DEATH BATTLE, os ataques são escalados para Parede+, conforme o tier declarado pelo criador.",result:"Parede+.",caution:"A classificação é a regra da animação; não representa um cálculo de energia medido."},
+ {title:"Via 2 — Aceleração na perseguição",feat:"Durante a partida, Baldi pode aumentar sua velocidade conforme condições ligadas à progressão do jogo.",scaling:"A mecânica dá a ele uma vantagem crescente para alcançar o adversário.",result:"Aceleração durante a perseguição.",caution:"Isso não prova velocidade infinita ou relativística."}
+ ],
+ conclusion:"Parede+",tierNote:"Tier declarado por Abnner para esta DEATH BATTLE. As habilidades de rastreamento e perseguição são avaliadas separadamente da força.",
+ sources:[["Site oficial de Basically Games","https://www.basicallygames.com/"],["Baldi's Basics Plus — Steam","https://store.steampowered.com/app/1275890/Baldi/"]]
+},
+{
+ id:"misscircle",name:"Miss Circle",subtitle:"Fundamental Paper Education · Professora de matemática",image:"misscircle.jpg",
+ introduction:"Esta é Miss Circle, uma das antagonistas de Fundamental Paper Education. Ela é uma professora de matemática extremamente alta e violenta, conhecida por perseguir alunos que falham em suas provas. Seu braço em forma de compasso funciona como uma arma perigosa.",
+ stats:[["Força","Parede"],["Velocidade","Não calculada de forma confiável"],["Durabilidade","Não estabelecida com precisão"],["Arma principal","Compasso incorporado ao braço"],["Habilidades","Combate corpo a corpo, perseguição e intimidação"],["Tier declarado","Parede"]],
+ powers:["Força física usada para perseguir e atacar alunos.","Compasso como arma para ataques perfurantes.","Garras e dentes afiados em suas representações.","Intimidação e perseguição de alvos.","Possível manipulação de tamanho em algumas interpretações de fãs; não tratada aqui como fato confirmado."],
+ routes:[
+ {title:"Via 1 — Ataques com o compasso",feat:"Em Basics in Behavior, Miss Circle usa seu compasso para ameaçar e atacar alunos.",scaling:"Para esta DEATH BATTLE, esses ataques são escalados para Parede, de acordo com a declaração do criador.",result:"Parede.",caution:"O tier é a regra da animação; cenas específicas precisariam de cálculos para demonstrar um valor independente."},
+ {title:"Via 2 — Força e perseguição",feat:"Miss Circle consegue perseguir os alunos e usar sua arma em combates a curta distância.",scaling:"Esses elementos sustentam seu papel de ameaça física dentro do ambiente escolar.",result:"Combate corpo a corpo e pressão sobre o adversário.",caution:"A altura e a aparência ameaçadora não provam, por si só, um nível superior de destruição."}
+ ],
+ conclusion:"Parede",tierNote:"Tier declarado por Abnner para esta DEATH BATTLE. O compasso, a força física e os demais feitos são considerados separadamente do tier.",
+ sources:[["Fundamental Paper Education Wiki — Miss Circle","https://fundamental-paper-education.fandom.com/wiki/Miss_Circle"],["Galeria de Miss Circle","https://fundamental-paper-education.fandom.com/wiki/Miss_Circle/Gallery"],["Basics in Behavior — busca do vídeo original","https://www.youtube.com/results?search_query=Basics+in+Behavior+Miss+Circle"]]
+},
+{
+ id:"doctordoom",name:"Doutor Destino",subtitle:"Victor von Doom · Marvel Comics",image:"doctordoom.jpg",
+ introduction:"Este é Victor von Doom, conhecido como Doutor Destino, um dos maiores inimigos do Quarteto Fantástico. É um cientista genial, inventor de armaduras avançadas e um feiticeiro extremamente habilidoso. Nesta DEATH BATTLE, a escala declarada para ele é Complex Multiversal; os feitos e a versão utilizada precisam ser considerados em conjunto.",
+ stats:[["Inteligência","Gênio científico e estrategista"],["Força","Depende da armadura, magia e amplificações"],["Durabilidade","Depende da armadura, escudos e magia"],["Habilidades","Feitiçaria, tecnologia, campos de força e Doombots"],["Tier declarado","Complex Multiversal"]],
+ powers:["Intelecto científico extraordinário e tecnologia avançada.","Armadura com armas e sistemas defensivos.","Feitiçaria: encantamentos, ataques mágicos e barreiras.","Campos de força e resistência contra ataques poderosos.","Viagem no tempo por tecnologia em histórias específicas.","Doombots: robôs duplicados que podem confundir adversários.","Roubo ou absorção de poderes cósmicos em histórias específicas.","God Emperor Doom: forma especial ligada à absorção dos poderes dos Beyonders e à criação do Battleworld."],
+ routes:[
+ {title:"Via 1 — God Emperor Doom e os Beyonders",feat:"Em Secret Wars (2015), Doom obtém poder dos Beyonders e constrói Battleworld a partir dos restos do multiverso.",scaling:"Esse feito sustenta uma escala cósmica extremamente elevada para a forma God Emperor Doom, que é distinta da versão comum.",result:"Via principal para a escala multiversal elevada.",caution:"A classificação Complex Multiversal é o tier declarado pelo criador; o feito deve ser analisado com cuidado antes de atribuir um número exato de dimensões."},
+ {title:"Via 2 — Ciência, magia e absorção de poder",feat:"Ao longo dos quadrinhos, Doom combina tecnologia, magia e planos para enfrentar entidades e adversários muito mais poderosos.",scaling:"Essa versatilidade explica como pode acessar níveis de poder muito diferentes conforme a história e as amplificações disponíveis.",result:"Complex Multiversal — tier declarado para esta DEATH BATTLE.",caution:"Não transferir automaticamente os feitos de God Emperor Doom para todas as versões de Victor von Doom."}
+ ],
+ conclusion:"Complex Multiversal",tierNote:"Tier declarado por Abnner para esta DEATH BATTLE. A via de God Emperor Doom é uma forma especial; a versão exata e a continuidade escolhidas precisam ser mantidas consistentes.",
+ sources:[["Marvel — Secret Wars","https://www.marvel.com/comics/events/270/secret_wars_2015"],["Victor von Doom — Marvel Database","https://marvel.fandom.com/wiki/Victor_von_Doom_(Earth-616)"],["Doutor Destino — Marvel","https://www.marvel.com/characters/doctor-doom-victor-von-doom"]]
+}
+];
+
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function renderCards(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const results=characters.filter(c=>c.name.toLowerCase().includes(q)||c.subtitle.toLowerCase().includes(q));
+ document.getElementById("total").textContent=characters.length;
+ if(!results.length){cards.innerHTML='<div class="empty">Nenhum personagem encontrado.</div>';return;}
+ cards.innerHTML=results.map(c=>`<article class="card" tabindex="0" role="button" data-id="${esc(c.id)}"><img src="${esc(c.image)}" alt="${esc(c.name)}" onerror="this.style.display='none'"><div class="card-body"><h2>${esc(c.name)}</h2><p>${esc(c.subtitle)}</p><span class="tier-tag">${esc(c.conclusion)}</span></div></article>`).join("");
+}
+function openCharacter(id){
+ const c=characters.find(x=>x.id===id);if(!c)return;
+ heading.style.display="none";home.style.display="none";details.style.display="block";
+ const stats=c.stats.map(([a,b])=>`<div class="stat"><strong>${esc(a)}</strong><span>${esc(b)}</span></div>`).join("");
+ const powers=c.powers.map(x=>`<li>${esc(x)}</li>`).join("");
+ const routes=c.routes.map(r=>`<div class="route"><h3>${esc(r.title)}</h3><p><strong>Feito:</strong> ${esc(r.feat)}</p><p><strong>Interpretação da via:</strong> ${esc(r.scaling)}</p><p class="conclusion">${esc(r.result)}</p><p class="note"><strong>Limite da evidência:</strong> ${esc(r.caution)}</p></div>`).join("");
+ const sources=c.sources.map(([title,url])=>`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(title)}</a>`).join("");
+ content.innerHTML=`<div class="profile"><img class="portrait" src="${esc(c.image)}" alt="${esc(c.name)}" onerror="this.style.display='none'"><div><h1>${esc(c.name)}</h1><p class="subtitle">${esc(c.subtitle)}</p><p style="line-height:1.8;color:#d0d5e0">${esc(c.introduction)}</p><section class="section"><h2>Estatísticas</h2>${stats}</section></div></div><section class="section"><h2>Poderes e habilidades</h2><ul>${powers}</ul></section><section class="section"><h2>Feitos e vias de escala</h2>${routes}</section><section class="section tier-box"><h2>Tier final da DEATH BATTLE</h2><div class="tier-name">${esc(c.conclusion)}</div><p>${esc(c.tierNote)}</p></section><section class="section sources"><h2>Fontes e referências</h2><p>Abra os links para conferir as fontes originais e as interpretações usadas.</p>${sources}</section>`;
+ window.scrollTo(0,0);
+}
+cards.addEventListener("click",e=>{const card=e.target.closest(".card");if(card)openCharacter(card.dataset.id);});
+cards.addEventListener("keydown",e=>{const card=e.target.closest(".card");if(card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openCharacter(card.dataset.id);}});
+document.getElementById("back").addEventListener("click",()=>{details.style.display="none";heading.style.display="block";home.style.display="block";window.scrollTo(0,0);});
+document.getElementById("search").addEventListener("input",renderCards);
+renderCards();
+</script>
+</body>
+</html>
